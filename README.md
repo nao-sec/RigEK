@@ -123,20 +123,20 @@ Smallは2017年5月初旬にZerophageによって詳細な記事が書かれま�
 
 具体的なDecimal IPにおけるトラフィックを以下に示します. 実際のpcapファイルは[こちら](decimalip_rig.pcap)にあるので, 詳細を見たい人は参照して下さい.
 
-[08.jpg](08.jpg)
+![08.jpg](08.jpg)
 
 まずユーザはCompromisedサイトへアクセスします. するとCompromisedサイトからはHTTP Status Code 302によってLocationへリダイレクトを行います.
 
-[09.jpg](09.jpg)
+![09.jpg](09.jpg)
 
 リダイレクト先でも同じようにHTTP Status Code 302によってrig.phpというファイルへリダイレクトします.
 
-[10.jpg](10.jpg)
+![10.jpg](10.jpg)
 
 rig.phpではRigEKへ誘導するURLに接続します.
 
-[11.jpg](11.jpg)
-[12.jpg](12.jpg)
+![11.jpg](11.jpg)
+![12.jpg](12.jpg)
 
 すると難読化されたJavaScriptを含むhtmlをブラウザが読み込み, 何らかの脆弱性を突くコードが走ることによってマルウェアがダウンロードされ, 実行されます.
 
