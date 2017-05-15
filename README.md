@@ -1,4 +1,4 @@
-# 初めてのRig Exploit Kitリーディング
+# 初めての Rig Exploit Kit リーディング
 Written by [@nao_sec](https://twitter.com/nao_sec)([@kkrnt](https://twitter.com/kkrnt), [@PINKSAWTOOTH](https://twitter.com/PINKSAWTOOTH)), 2017-05-15
 
 本記事は日本語で書かれています. 英語版は作成中です, 今しばらくお待ち下さい.
@@ -18,7 +18,7 @@ RigEKを利用している（していた）Campaignは以下のようなもの�
 - Decimal IP
 - Seamless
 
-これらの中で, pseudo-DarkleechとEITestとGoodManは既に観測出来なくなっています. 現在アクティブなのはDecimal IPとSeamlessですが, それぞれについて簡単に紹介します.
+これらの中でpseudo-DarkleechとEITestとGoodManは既に観測出来なくなっていて, 現在アクティブなのはDecimal IPとSeamlessです.以下では, それぞれについて簡単に紹介します.
 
 ### pseudo-Darkleech
 pseudo-Darkleechに関しては, Unit 42のBrad氏がとても素晴らしいドキュメントを書いてくれています. 詳細を知りたい人はそれを見て下さい.
