@@ -1,11 +1,13 @@
-# 私が見たRig Exploit Kitの姿
+# 初めてのRig Exploit Kitリーディング
+Written by [@nao_sec](https://twitter.com/nao_sec)([@kkrnt](https://twitter.com/kkrnt), [@PINKSAWTOOTH](https://twitter.com/PINKSAWTOOTH)), 2017-05-15
+
 ## はじめに
 私はDrive-by Download攻撃について趣味で調べ始めてから3ヶ月が経ちました. それまでは攻撃の概要をぼんやりと知っていただけでしたが, 実際にpseudo-DarkleechやEITestなどのCampaignを追いかけ, 限定的なものではありますが, Drive-by Download攻撃の最前線を見ることが出来ました. 今回は私が今まで調査したことの中でも, 特に面白く, 私を熱中させてくれたRig Exploit Kitについて, 今私が知っている情報の一部を体系的にまとめます. 既知の内容が殆どであることは分かっていますが, 最新の攻撃動向を出来る限り全体を俯瞰すること, 日本語で書くことに意味があると考え, これを公開します.
 
-## Rig Exploit Kitとは(概要)
+## Rig Exploit Kitとは
 Rig Exploit Kit(RigEK)とは, 現在Drive-by Download攻撃(DbD)で最も利用されているExploit Kitの1つです. DbDとは, 攻撃者が用意したmaliciousなWebサイトや, 攻撃者によってmaliciousなコードがinjectされた一般のWebサイト(Compromisedサイト)へアクセスしたユーザに対して, 幾つかのリダイレクト(drive)を行い, 最終的にマルウェアをダウンロード・インストールさせる攻撃のことです. マルウェアをダウンロードさせるためにブラウザやその他プラグインの脆弱性を突くようなExploit Codeが攻撃者のサーバから送られ, そのコードによってマルウェアがdropし, 感染してしまいます. それらの攻撃の流れを容易に行うために作られているものがExploit Kitです. Exploit Kitを使うことで, 攻撃者は専門的な知識や技能を持たなくても, 容易にDbDを仕掛けることが出来ます. Rigは2016年9月頃から急激にシェアを増やし, 現在では多くのDbD Campaignで利用されています.
 
-## Campaignとの関係
+## RigEKを使用するCampaign
 RigEKを利用している（していた）Campaignは以下のようなものがあります.
 
 - pseudo-Darkleech
@@ -102,7 +104,7 @@ Seamlessは2017年2月頃から観測されていたと思いますが, 詳細�
 
 [‘Seamless’ Campaign Delivers Ramnit via Rig EK](https://umbrella.cisco.com/blog/2017/03/29/seamless-campaign-delivers-ramnit-via-rig-ek/)
 
-## RigEKの動き(pcapとトラフィックの図)
+## RigEKの挙動
 ここまででRigEKが様々なDbD Campaignで利用されていることが分かったでしょう. 次にCompromisedサイトからRigEKへリダイレクトしてきたユーザに対して, RigEKがどのような動きをするのか, 以下の図に説明します.
 
 ![07.jpg](http://i.imgur.com/5UmaYpp.jpg)
@@ -134,7 +136,7 @@ rig.phpではRigEKへ誘導するURLに接続します.
 
 すると難読化されたJavaScriptを含むhtmlをブラウザが読み込み, 何らかの脆弱性を突くコードが走ることによってマルウェアがダウンロードされ, 実行されます.
 
-## RigEKのファイル解析(難読化html)
+## RigEKのファイル
 上記の説明で, RigEKのおおよその動きは理解出来たかと思います. RigEKへリダイレクトされるところまでは全く特に難しい部分もないですが, RigEKから送られてくる難読化されたコードが何をしているのか, 具体的に示します.
 
 以下では私が以前書いた[Analyzing Rig Exploit Kit vol.1](http://www.nao-sec.org/2017/04/analyzing-rig-exploit-kit-vol1.html)のコードを参照します. 現在のRigEKのコードと違う部分も多少あるかもしれませんが, その部分は適宜読み替えて下さい.
@@ -633,7 +635,7 @@ function Il1I$() {
 ```
 
 ## さいごに
-以上が```私が見たRig Exploit Kitの姿```です. Drive-by Download攻撃及びExploit Kitは非常に高度に進化し, 今後も多くの被害をもたらすのではないかと危惧されています. この記事を読むことで「それらが実際にどのように行われているのか」知ることが出来れば幸いです.
+以上が```私が見たRig Exploit Kitの姿```です. Drive-by Download攻撃及びExploit Kitは高度に進化し, 今後も多くの被害をもたらすのではないかと危惧されています. この記事を読むことで「それらが実際にどのように行われているのか」知ることが出来れば幸いです.
 
 ## 参考文献
 - [Campaign Evolution: pseudo-Darkleech in 2016](http://researchcenter.paloaltonetworks.com/2016/12/unit42-campaign-evolution-pseudo-darkleech-2016/)
