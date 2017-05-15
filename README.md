@@ -920,13 +920,16 @@ function Il1I$() {
 ```
 
 ## さいごに
-以上が```私が見たRig Exploit Kitの姿```です. Drive-by Download攻撃及びExploit Kitは高度に進化し, 今後も多くの被害をもたらすのではないかと危惧されています. この記事を読むことで「それらが実際にどのように行われているのか」知ることが出来れば幸いです.
+以上がこれまで私が観測してきたRigEKの姿です. Drive-by Download攻撃及びExploit Kitは高度に進化し, 今後も多くの被害をもたらすのではないかと危惧されています. RigEKも今後より高度に進化していくでしょう. この記事を読むことで「Drive-by Download攻撃が実際にどのように行われているのか」「Exploit Kitとは何なのか」, 少しでも知ることが出来れば幸いです.
 
 ## 参考文献
+- [Take the RIG Pill: Down the Rabbit Hole](http://blog.talosintelligence.com/2016/11/rig-exploit-kit-campaign-happy-puzzling.html)
+- [RIG EK - Chronology of an Exploit Kit](https://community.rsa.com/community/products/netwitness/blog/2017/02/01/rig-ek-chronology-of-an-exploit-kit)
 - [Campaign Evolution: pseudo-Darkleech in 2016](http://researchcenter.paloaltonetworks.com/2016/12/unit42-campaign-evolution-pseudo-darkleech-2016/)
 - [pseudo-Darkleech_cloaking.md](https://github.com/koike/public/blob/master/2017/pseudo-Darkleech_cloaking.md)
 - [Campaign Evolution: EITest from October through December 2016](http://researchcenter.paloaltonetworks.com/2017/01/unit42-campaign-evolution-eitest-october-december-2016/)
 - [Finding A ‘Good Man’](https://malwarebreakdown.com/2017/03/10/finding-a-good-man/)
+- [2017-03-13 "GOOD MAN" CAMPAIGN RIG EK SENDS GODZILLA LOADER/ZBOT](http://www.malware-traffic-analysis.net/2017/03/13/index3.html)
 - [Websites compromised in ‘Decimal IP’ campaign](https://blog.malwarebytes.com/cybercrime/2017/03/websites-compromised-decimal-ip-campaign/)
 - [Overlooking Decimal IP Campaign](http://www.nao-sec.org/2017/05/overlooking-decimal-ip-campaign.html)
 - [‘Seamless’ Campaign Delivers Ramnit via Rig EK](https://umbrella.cisco.com/blog/2017/03/29/seamless-campaign-delivers-ramnit-via-rig-ek/)
