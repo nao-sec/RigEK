@@ -1,6 +1,8 @@
 # 初めてのRig Exploit Kitリーディング
 Written by [@nao_sec](https://twitter.com/nao_sec)([@kkrnt](https://twitter.com/kkrnt), [@PINKSAWTOOTH](https://twitter.com/PINKSAWTOOTH)), 2017-05-15
 
+本記事は日本語で書かれています. 英語版は作成中です, 今しばらくお待ち下さい.
+
 ## はじめに
 私はDrive-by Download攻撃について趣味で調べ始めてから3ヶ月が経ちました. それまでは攻撃の概要をぼんやりと知っていただけでしたが, 実際にpseudo-DarkleechやEITestなどのCampaignを追いかけ, 限定的なものではありますが, Drive-by Download攻撃の最前線を見ることが出来ました. 今回は私が今まで調査したことの中でも, 特に面白く, 私を熱中させてくれたRig Exploit Kitについて, 今私が知っている情報の一部を体系的にまとめます. 既知の内容が殆どであることは分かっていますが, 最新の攻撃動向を出来る限り全体を俯瞰すること, 日本語で書くことに意味があると考え, これを公開します.
 
