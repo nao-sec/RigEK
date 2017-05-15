@@ -1,5 +1,5 @@
 # 初めての Rig Exploit Kit リーディング
-この記事は[@nao_sec](https://twitter.com/nao_sec)([@kkrnt](https://twitter.com/kkrnt), [@PINKSAWTOOTH](https://twitter.com/PINKSAWTOOTH))が2017-05-15に公開しました. 書かれている内容について, 著者は一切の責任を負いません.
+この記事は[@nao_sec](https://twitter.com/nao_sec)([@kkrnt](https://twitter.com/kkrnt), [@PINKSAWTOOTH](https://twitter.com/PINKSAWTOOTH))が2017-05-15に公開しました.  書かれている内容について, 著者は一切の責任を負いません.
 
 本記事は日本語で書かれています. 英語版は作成中です, 今しばらくお待ち下さい.
 
