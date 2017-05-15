@@ -4,10 +4,10 @@ Written by [@nao_sec](https://twitter.com/nao_sec)([@kkrnt](https://twitter.com/
 本記事は日本語で書かれています. 英語版は作成中です, 今しばらくお待ち下さい.
 
 ## はじめに
-私はDrive-by Download攻撃について趣味で調べ始めてから3ヶ月が経ちました. それまでは攻撃の概要をぼんやりと知っていただけでしたが, 実際にpseudo-DarkleechやEITestなどのCampaignを追いかけ, 限定的なものではありますが, Drive-by Download攻撃の最前線を見ることが出来ました. 今回は私が今まで調査したことの中でも, 特に面白く, 私を熱中させてくれたRig Exploit Kitについて, 今私が知っている情報の一部を体系的にまとめます. 既知の内容が殆どであることは分かっていますが, 現在一般的な攻撃について一連の処理を追うこと, 日本語で書くことに意味があると考え, これを公開します. ここで紹介しなかった内容に関しては, 後日(他の機関とともに)別の形で公開されると思います. そちらは公開され次第ここにリンクを貼ろうと思っています.
+私がDrive-by Download攻撃について趣味で調べ始めてから3ヶ月が経ちました. それまでは攻撃の概要をぼんやりと知っていただけでしたが, 実際にpseudo-DarkleechやEITestなどのCampaignを追いかけ, 限定的なものではありますが, Drive-by Download攻撃の最前線を見ることが出来ました. 今回は私が今まで調査したことの中でも, 特に面白く, 私を熱中させてくれたRig Exploit Kitについて, 今私が知っている情報の一部をまとめます. 既知の内容が殆どであることは分かっていますが, 現在一般的な攻撃について一連の処理を追うこと, 日本語で書くことに意味があると考え, これを公開します. ここで紹介しなかった内容に関しては, 後日(他の機関とともに)別の形で公開されると思います. そちらは公開され次第ここにリンクを貼ろうと思います.
 
 ## Rig Exploit Kitとは
-Rig Exploit Kit(RigEK)とは, 現在Drive-by Download攻撃(DbD)で最も利用されているExploit Kitの1つです. DbDとは, 攻撃者が用意したmaliciousなWebサイトや, 攻撃者によってmaliciousなコードがinjectされた一般のWebサイト(Compromisedサイト)へアクセスしたユーザに対して, 幾つかのリダイレクト(drive)を行い, 最終的にマルウェアをダウンロード・インストールさせる攻撃のことです. マルウェアをダウンロードさせるためにブラウザやその他プラグインの脆弱性を突くようなExploit Codeが攻撃者のサーバから送られ, そのコードによってマルウェアがdropし, 感染してしまいます. それらの攻撃の流れを容易に行うために作られているものがExploit Kitです. Exploit Kitを使うことで, 攻撃者は専門的な知識や技能を持たなくても, 容易にDbDを仕掛けることが出来ます. Rigは2016年9月頃から急激にシェアを増やし, 現在では多くのDbD Campaignで利用されています.
+Rig Exploit Kit(RigEK)とは, 現在Drive-by Download攻撃(DbD)で最も利用されているExploit Kitの1つです. DbDとは, 攻撃者が用意したmaliciousなWebサイトや, 攻撃者によってmaliciousなコードがinjectされた一般のWebサイト(Compromisedサイト)へアクセスしたユーザに対して, 幾つかのリダイレクト(drive)を行い, 最終的にマルウェアをダウンロード・インストールさせる攻撃のことです. マルウェアをダウンロード・インストールさせるためにブラウザやその他プラグインの脆弱性を突くようなExploit Codeが攻撃者のサーバから送られ, そのコードによってマルウェアがdropし, 感染してしまいます. それらの攻撃の流れを容易に行うために作られているものがExploit Kitです. Exploit Kitを使うことで, 攻撃者は専門的な知識や技能を持たなくても, 容易にDbDを仕掛けることが出来ます. RigEKは2016年9月頃から急激にシェアを増やし, 現在では多くのDbD Campaignで利用されています.
 
 ## RigEKを使用するCampaign
 RigEKを利用している（していた）Campaignは以下のようなものがあります.
@@ -21,7 +21,7 @@ RigEKを利用している（していた）Campaignは以下のようなもの�
 これらの中で, pseudo-DarkleechとEITestとGoodManは既に観測出来なくなっています. 現在アクティブなのはDecimal IPとSeamlessですが, それぞれについて簡単に紹介します.
 
 ### pseudo-Darkleech
-pseudo-Darkleechに関しては, malware-traffic-analysisのBradがとても素晴らしいドキュメントを書いてくれています. 詳細を知りたい人はそれを見て下さい.
+pseudo-Darkleechに関しては, Unit 42のBrad氏がとても素晴らしいドキュメントを書いてくれています. 詳細を知りたい人はそれを見て下さい.
 
 [Campaign Evolution: pseudo-Darkleech in 2016](http://researchcenter.paloaltonetworks.com/2016/12/unit42-campaign-evolution-pseudo-darkleech-2016/)
 
@@ -45,7 +45,7 @@ pseudo-Darkleechのクローキングに関しては別途でドキュメント�
 [pseudo-Darkleech_cloaking.md](https://github.com/koike/public/blob/master/2017/pseudo-Darkleech_cloaking.md)
 
 ### EITest
-EITestに関しても, Bradが素晴らしい記事を書いています. 是非そちらを参照して下さい.
+EITestに関しても, Brad氏が素晴らしい記事を書いています. 是非そちらを参照して下さい.
 
 [Campaign Evolution: EITest from October through December 2016](http://researchcenter.paloaltonetworks.com/2017/01/unit42-campaign-evolution-eitest-october-december-2016/)
 
@@ -76,7 +76,7 @@ GoodManはそれほど多くのCompromisedサイトが存在していたわけ�
 - 常にRigEKへ繋がっているわけではない
 
 ### Decimal IP
-Decimal IPは2017年3月末にMalwarebytesによって詳細が公開されました. 詳細はmalwarebytesの記事を参照して下さい.
+Decimal IPは2017年3月末にMalwarebytesによって詳細が公開されました. 詳細はMalwarebytesの記事を参照して下さい.
 
 [Websites compromised in ‘Decimal IP’ campaign](https://blog.malwarebytes.com/cybercrime/2017/03/websites-compromised-decimal-ip-campaign/)
 
@@ -99,7 +99,7 @@ IEでアクセスした場合は上記のような動作をしますが, Chrome�
 
 [Overlooking Decimal IP Campaign](http://www.nao-sec.org/2017/05/overlooking-decimal-ip-campaign.html)
 
-ロジックが原始的で, かなり荒削りな部分が目立つCampaignで, Compromisedサイトの数は多くないと思われます.
+ロジックが原始的で, かなり荒削りな部分が目立つCampaignで, Compromisedサイトの数はそれほど多くないと思われます.
 
 ### Seamless
 Seamlessは2017年2月頃から観測されていたと思いますが, 詳細な記事が出たのは3月末です. Cisco Umbrellaの記事がとても参考になるでしょう. 私はSeamlessを殆ど観測したことがないので, 詳細はその記事を参照して下さい.
