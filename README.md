@@ -25,7 +25,7 @@ pseudo-Darkleechに関しては, malware-traffic-analysisのBradがとても素�
 
 pseudo-DarkleechはCompromisedサイトに対して以下のようなコードをinjectし, RigEKへ誘導します.
 
-![01.jpg](http://i.imgur.com/XZ0oTwq.jpg)
+<img src='http://i.imgur.com/XZ0oTwq.jpg' width='60%'>
 
 とても大規模な攻撃Campaignで, 膨大な数のWebサイトが被害に合っていましたが, 2017年4月3日頃から一切観測出来なくなりました.
 
@@ -49,7 +49,7 @@ EITestに関しても, Bradが素晴らしい記事を書いています. 是非
 
 EITestはCompromisedサイトに対して以下のようなコードをinjectし, RigEKへ誘導します.
 
-![02.jpg](http://i.imgur.com/kV6nyYZ.jpg)
+<img src='http://i.imgur.com/kV6nyYZ.jpg' width='60%'>
 
 EITestはpseudo-Darkleechと同時期に活発化していたCampaignで, 日本からは観測出来ないことが殆どでしたが, pseudo-Darkleechと同じように多くのWebサイトが被害に合いました. しかし, EITestは4月28日以降観測されていません.
 
@@ -65,7 +65,7 @@ GoodManは2017年3月から観測されるようになったCampaignで, 5月初
 
 [Finding A ‘Good Man’](https://malwarebreakdown.com/2017/03/10/finding-a-good-man/)
 
-![03.jpg](http://i.imgur.com/9O1Vh2o.jpg)
+<img src='http://i.imgur.com/9O1Vh2o.jpg' width='60%'>
 
 GoodManはそれほど多くのCompromisedサイトが存在していたわけではありません. そのため私はあまり多くの情報を持っていませんが, 簡単に特徴を挙げます.
 
@@ -80,11 +80,11 @@ Decimal IPは2017年3月末にMalwarebytesによって詳細が公開されま�
 
 これまで紹介したpseudo-DarkleechやEITestとは違い, iframeでリダイレクトせずに, HTTP Status Codeによってリダイレクトします. 動作原理自体は伝統的なDbDの手法ですが, Decimal IPを使うところが特徴です. 一般的に用いられているIPv4は10進数を4つ組み合わせて表現しますが, 他の表記方法もあります. それを利用しているのはこのCampaignで, 恐らくフィルタなどで検知されないようにすることが目的だと思われます.
 
-![04.jpg](http://i.imgur.com/qYXpFqz.jpg)
+<img src='http://i.imgur.com/qYXpFqz.jpg' width='60%'>
 
-![05.jpg](http://i.imgur.com/TcLxSzK.jpg)
+<img src='http://i.imgur.com/TcLxSzK.jpg' width='60%'>
 
-![06.jpg](http://i.imgur.com/h7Wplmv.jpg)
+<img src='http://i.imgur.com/h7Wplmv.jpg' width='60%'>
 
 特徴としては以下が挙げられます.
 
@@ -107,7 +107,7 @@ Seamlessは2017年2月頃から観測されていたと思いますが, 詳細�
 ## RigEKの挙動
 ここまででRigEKが様々なDbD Campaignで利用されていることが分かったでしょう. 次にCompromisedサイトからRigEKへリダイレクトしてきたユーザに対して, RigEKがどのような動きをするのか, 以下の図に説明します.
 
-![07.jpg](http://i.imgur.com/5UmaYpp.jpg)
+<img src='http://i.imgur.com/5UmaYpp.jpg' width='60%'>
 
 1. ユーザがCompromisedサイトへアクセスします
 2. CompromisedサイトにinjectされたコードによってRigEKへ繋がるURLを生成します
@@ -119,20 +119,20 @@ Seamlessは2017年2月頃から観測されていたと思いますが, 詳細�
 
 具体的なDecimal IPにおけるトラフィックを以下に示します. 実際のpcapファイルは[こちら](decimalip_rig.pcap)にあるので, 詳細を見たい人は参照して下さい.
 
-![08.jpg](http://i.imgur.com/oDgtebf.jpg)
+<img src='http://i.imgur.com/oDgtebf.jpg' width='60%'>
 
 まずユーザはCompromisedサイトへアクセスします. するとCompromisedサイトからはHTTP Status Code 302によってLocationへリダイレクトを行います.
 
-![09.jpg](http://i.imgur.com/ShVHaiE.jpg)
+<img src='http://i.imgur.com/ShVHaiE.jpg' width='60%'>
 
 リダイレクト先でも同じようにHTTP Status Code 302によってrig.phpというファイルへリダイレクトします.
 
-![10.jpg](http://i.imgur.com/2P1VnIl.jpg)
+<img src='http://i.imgur.com/2P1VnIl.jpg' width='60%'>
 
 rig.phpではRigEKへ誘導するURLに接続します.
 
-![11.jpg](http://i.imgur.com/B4kdDrV.jpg)
-![12.jpg](http://i.imgur.com/CfuQecJ.jpg)
+<img src='http://i.imgur.com/B4kdDrV.jpg' width='60%'>
+<img src='http://i.imgur.com/CfuQecJ.jpg' width='60%'>
 
 すると難読化されたJavaScriptを含むhtmlをブラウザが読み込み, 何らかの脆弱性を突くコードが走ることによってマルウェアがダウンロードされ, 実行されます.
 
